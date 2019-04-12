@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.user.UserMapper">
+	<select id="selectList"  resultType="map">
+		SELECT t.name,t.age,t.birthday,t.phone FROM `user` t 
+	</select>
+	
+	<insert id="addUser" parameterType="map">
+		insert into user(name,age,birthday,phone) values(#{name},#{age},#{birthday},#{phone});
+	</insert>
+	
+	<delete id="deleteUser" parameterType="map">
+		delete from user where name=#{name}
+	</delete>
+</mapper>
