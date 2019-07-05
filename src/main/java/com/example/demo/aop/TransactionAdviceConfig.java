@@ -42,23 +42,25 @@ public class TransactionAdviceConfig {
             // 定义事物传播规则，以非事物方式运行
         	RuleBasedTransactionAttribute txAttr_READONLY_SUPPORTED = new RuleBasedTransactionAttribute();
         	txAttr_READONLY_SUPPORTED.setReadOnly(true);
-        	txAttr_READONLY_SUPPORTED.setPropagationBehavior(TransactionDefinition.PROPAGATION_NOT_SUPPORTED);
+        	txAttr_READONLY_SUPPORTED.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        	txAttr_READONLY_SUPPORTED.setReadOnly(true);
 
             // 事务管理规则，申明具备事物管理的方法名
             NameMatchTransactionAttributeSource source = new NameMatchTransactionAttributeSource();
-            Map<String, TransactionAttribute> sourceMap = new HashMap<String, TransactionAttribute>();
-            sourceMap.put("add*", txAttr_REQUIRED);
-            sourceMap.put("save*", txAttr_REQUIRED);
-            sourceMap.put("delete*", txAttr_REQUIRED);
-            sourceMap.put("update*", txAttr_REQUIRED);
-            sourceMap.put("execute*", txAttr_REQUIRED);
-            sourceMap.put("get*", txAttr_READONLY_SUPPORTED);
-            sourceMap.put("query*", txAttr_READONLY_SUPPORTED);
-            sourceMap.put("find*", txAttr_READONLY_SUPPORTED);
-            sourceMap.put("list*", txAttr_READONLY_SUPPORTED);
-            sourceMap.put("count*", txAttr_READONLY_SUPPORTED);
-            sourceMap.put("is*", txAttr_READONLY_SUPPORTED);
-            source.setNameMap(sourceMap);
+            source.addTransactionalMethod("add*", txAttr_REQUIRED);
+            source.addTransactionalMethod("save*", txAttr_REQUIRED);
+            source.addTransactionalMethod("delete*", txAttr_REQUIRED);
+            source.addTransactionalMethod("update*", txAttr_REQUIRED);
+            source.addTransactionalMethod("modify*", txAttr_REQUIRED);
+            source.addTransactionalMethod("insert*", txAttr_REQUIRED);
+            source.addTransactionalMethod("execute*", txAttr_REQUIRED);
+            source.addTransactionalMethod("get*", txAttr_READONLY_SUPPORTED);
+            source.addTransactionalMethod("select*", txAttr_READONLY_SUPPORTED);
+            source.addTransactionalMethod("query*", txAttr_READONLY_SUPPORTED);
+            source.addTransactionalMethod("find*", txAttr_READONLY_SUPPORTED);
+            source.addTransactionalMethod("list*", txAttr_READONLY_SUPPORTED);
+            source.addTransactionalMethod("count*", txAttr_READONLY_SUPPORTED);
+            source.addTransactionalMethod("is*", txAttr_READONLY_SUPPORTED);
             return new TransactionInterceptor(transactionManager, source);
         }
 

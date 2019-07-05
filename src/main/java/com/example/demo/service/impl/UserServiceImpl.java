@@ -16,8 +16,9 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	UserMapper userMapper;
+	
 	@Override
-	public Map<String, Object> queryList() {
+	public Map<String, Object> queryList(Map<String, Object> inParam) {
 		Map<String, Object> outMap = new HashMap<String, Object>();
 		try {
 			List<Map<String, Object>> list = userMapper.selectList();
@@ -31,35 +32,15 @@ public class UserServiceImpl implements UserService{
 		return outMap;
 	}
 	
-	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public Map<String, Object> addUser(Map<String, Object> inParam) {
-		Map<String, Object> outMap = new HashMap<String, Object>();
-		try {
+	public void addUser(Map<String, Object> inParam) {
 			userMapper.addUser(inParam);
-			outMap.put("retCode", "0");
-			outMap.put("retMsg", "新增成功！");
-		} catch (Exception e) {
-			e.printStackTrace();
-			outMap.put("retCode", "0");
-			outMap.put("retMsg", "新增失败！");
-		}
-		
-		return outMap;
 	}
+	
+	
 	@Override
-	public Map<String, Object> deleteUser(Map<String, Object> inParam) {
-		Map<String, Object> outMap = new HashMap<String, Object>();
-		try {
-			userMapper.deleteUser(inParam);
-			outMap.put("retCode", "0");
-			outMap.put("retMsg", "删除成功！");
-		} catch (Exception e) {
-			e.printStackTrace();
-			outMap.put("retCode", "0");
-			outMap.put("retMsg", "删除失败！");
-		}
-		return outMap;
+	public void deleteUser(Map<String, Object> inParam) {
+		userMapper.deleteUser(inParam);
 	}
 
 }

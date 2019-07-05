@@ -1,14 +1,18 @@
 package com.example.test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.alibaba.fastjson.JSON;
 import com.example.tree.TreeBuilder;
 import com.example.tree.TreeNode;
 
 public class Test {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		
 		
 		List<TreeNode> treeNodeList = new ArrayList<TreeNode>();
@@ -31,6 +35,11 @@ public class Test {
 		List<TreeNode> trees = TreeBuilder.bulid(treeNodeList);
 		String json = JSON.toJSONString(trees);
 		System.out.println(json);
+		
+		
+		String datestr = "2019-07";
+		
+
 	}
 
 }
